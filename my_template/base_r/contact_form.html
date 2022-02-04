@@ -1,0 +1,28 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load addcss %}
+
+
+{% block content %}
+
+<section class='container m'>
+    <h6 class='text-center'>Jeżeli chcesz skontaktować się z administratorami strony napisz tutaj wiadomość i oczekuj odpowiedzi na swojej poczcie.</h6>
+    <form method='POST' action=''>
+        {% csrf_token %}
+        {% if not request.user.is_authenticated %}
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Adres email</label>
+            {{form.email|addcss:"form-control"}}
+          </div>
+        {% endif %}
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Wiadomość</label>
+            {{form.text|addcss:"form-control"}}
+          </div>
+          <p><input class="btn btn-success btn-lg btn-block marg" type="submit" value="Wyślij wiadomość"></p>
+    </form>
+
+</section>
+
+{% endblock content %}

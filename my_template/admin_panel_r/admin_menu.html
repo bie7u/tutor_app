@@ -1,0 +1,17 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load group_auth %}
+
+
+{% block content %}
+
+<section class='container m'>
+
+    <a href="{% url 'admin-users' %}" class="btn btn-primary btn-lg btn-block text-light">Użytkownicy</a>
+    <a href="{% url 'admin-add-blog-entry' %}" class="btn btn-primary btn-lg btn-block text-light">Dodaj wpis na główną stronę</a>
+
+
+</section>
+
+{% endblock %}

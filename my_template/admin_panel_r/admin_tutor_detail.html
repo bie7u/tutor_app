@@ -1,0 +1,84 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+<section class='container m'>
+    <h1 class='text-center'>Korepetytor</h1>
+    <div>
+        <p><span class='font-weight-bold'>Imię: </span>{{user.client.first_name}}</p>
+        <p><span class='font-weight-bold'>Nazwisko: </span>{{user.client.last_name}}</p>
+        <p><span class='font-weight-bold'>Kontakt: </span>{{user.client.email}}</p>
+        <p><span class='font-weight-bold'>Numer telefonu: </span>{{user.client.phone}}</p>
+        <p><span class='font-weight-bold'>Data stworzenia konta: </span>{{user.client.date_created|date:"d.m.Y H:m"}}</p>
+    </div>
+    <hr>
+    <div>
+        {% if not user.notice %}
+            <h6 class='font-weight-bold'>Użytkownik nie posiada żadnych ogłoszeń</h6>
+            <hr>
+        {% endif %}
+    </div>
+    <div>
+        {% if user.notice %}
+        <p><span class='font-weight-bold'>Użytkownik posiada ogłoszenie: </span>
+        <a class='text-decoration-none text-muted' href="{% url 'detail_tutor_view' user.notice.id %}">Zobacz</a> <a href="{% url 'admin-delete-notice' user.notice.id %}">Usuń</a></p> 
+        {% endif %}
+    </div>
+    <div>
+        {% if blog %}
+        <p><span class='font-weight-bold'>Użytkownik posiada wpisy na blog: </span>
+            {% for entry in blog %}
+            <p><a class='text-decoration-none text-muted' href="{% url 'entry_detail' entry.id %}">{{entry.title}}</a> <a href="{% url 'admin-delete-entry' entry.id %}"> Usuń</a></p>
+            <p>Data dodania: {{entry.created_on|date:"d.m.Y H:m"}}</p>
+            {% if modified %}
+            <p>Data modyfikacji: {{modified|date:"d.m.Y H:m"}}</p>
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if not blog %}
+            <p><span class='font-weight-bold'>Użytkownik nie posiada wpisów na blogu.</span>
+        {% endif %}
+    </div>
+
+    <div>
+        {% if order %}
+        <h5 class='font-weight-bold text-center'>Zapytania o korepetycje</h5>
+        {% for o in order %}
+        <p><a href="{% url 'admin-customer-detail' o.user.id %}">{{o.user}}</a></p>
+        <p><span class='font-weight-bold'>Miasto: </span>{{o.city}}</p>
+        <p><span class='font-weight-bold'>Ulica: </span>{{o.street}}</p>
+        <p><span class='font-weight-bold'>Numer domu: </span>{{o.number}}</p>
+        <p><span class='font-weight-bold'>Data: </span>{{o.expiration_date|date:"d.m.Y"}}</p>
+        <p><span class='font-weight-bold'>Godzina: </span>{{o.hours}}</p>
+        <hr>
+        {% endfor %}
+        {% endif %}
+        {% if not order %}
+            <h5>Korepetytor aktualnie nie posiada żadnych zapytań o korepetycje</h5>
+        {% endif %}
+
+        {% if order_accept %}
+        <h5 class='font-weight-bold text-center'>Zajęcia zaakceptowane</h5>
+            {% for o in order_accept %}
+            <p><a href="{% url 'admin-customer-detail' o.user.id %}">{{o.user}}</a></p>
+            <p><span class='font-weight-bold'>Miasto: </span>{{o.city}}</p>
+            <p><span class='font-weight-bold'>Ulica: </span>{{o.street}}</p>
+            <p><span class='font-weight-bold'>Numer domu: </span>{{o.number}}</p>
+            <p><span class='font-weight-bold'>Data: </span>{{o.expiration_date|date:"d.m.Y"}}</p>
+            <p><span class='font-weight-bold'>Godzina: </span>{{o.hours}}</p>
+            <hr>
+            {% endfor %}
+        {% endif %}
+
+        {% if not order_accept %}
+            <h5>Korepetytor aktualnie nie posiada żadnych umówionych korepetycji</h5>
+        {% endif %}
+
+
+    </div> 
+</section>
+{% endblock content %}

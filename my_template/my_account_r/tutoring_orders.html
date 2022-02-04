@@ -1,0 +1,51 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load tut %}
+{% load group_auth %}
+
+{% block content %}
+<section class='container m'>
+{% if request|group_auth == 1 %}
+<h2 class='font-weight-bold'>Propozycje korepetycji</h2>
+<hr>
+{% if not b %}
+<h3>Nie posiadasz żadnych ofert korepetycji</h3>
+<hr>
+{% endif %}
+{% for tut in b %}
+<p>{{tut.expiration_date|date:"d.m.Y"}}</p>
+<p>{{tut.hours}}</p>
+<a class="btn btn-outline-success" href="{% url 'detail_order_tutoring' tut.id %}">Więcej</a>
+<hr>
+{% endfor %}
+{% endif %}
+{% if request|group_auth == 2 %}
+
+
+<a href="{% url 'tutors' %}" class='text-decoration-none text-dark'><h3>Zarezerwuj swoja lekcję.</h3></a>
+
+
+{% if not rest_tut %}
+<h5>Zapytania o korepetycje</h5>
+{% endif %}
+
+{% for tut in res_tut %}
+<p><span class='font-weight-bold'>Data: </span>{{tut.expiration_date|date:"d.m.Y" }}</p>
+<p><span class='font-weight-bold'>Godzina: </span>{{tut.hours}}</p>
+<p><span class='font-weight-bold'>Imię korepetytora: </span>{{tut.tutor.user.client.first_name}}</p>
+<p><span class='font-weight-bold'>Nazwisko korepetytora: </span>{{tut.tutor.user.client.last_name}}</p>
+<p><span class='font-weight-bold'>Cena za godzinę: </span>{{tut.tutor.price}}</p>
+<h5 class='font-weight-bold'>Dane podane przy rezerwacji</h5>
+<p><span class='font-weight-bold'>Miasto: </span>{{tut.city}}</p>
+<p><span class='font-weight-bold'>Ulica: </span>{{tut.street}}</p>
+<p><span class='font-weight-bold'>Numer domu: </span>{{tut.number}}</p>
+<p><span class='font-weight-bold'>Numer telefonu: </span>{{tut.phone_number}}</p>
+<hr>
+{% endfor %}
+
+{% endif %}
+<a href="{% url 'all_orders' %}" class="btn btn-success m">Zobacz swoje korepetycje</a>
+</section>
+
+{% endblock content %}

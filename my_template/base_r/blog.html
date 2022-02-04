@@ -1,0 +1,25 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+<section class='container py-4'>
+  <p class='display-4 text-center'>Blog</p>
+<div class="row row-cols-1 row-cols-md-3">
+{% for entry in form %}
+<div class="col mb-4">
+    <div class="card">
+      <img src="{{entry.blog_pic.url}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{entry.title}}</h5>
+        <p class="card-text">{{entry.created_on|date:"d.m.Y H:m"}}</p>
+        <a class="btn btn-primary btn-lg btn-block" href="{% url 'entry_detail' entry.id %}">Czytaj...</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+</section>
+{% endblock content %}

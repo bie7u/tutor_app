@@ -1,0 +1,38 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class='container m'>
+<div class='d-flex column justify-content-around'>
+    <div class=''>
+        <h3>Korepetytorzy</h3>
+        {% for tutor in tutors %}
+        <a href="{% url 'admin-tutor-detail' tutor.id %}">{{tutor}}</a> <a href="{% url 'admin-delete-user' tutor.id %}" class='text-danger'>Usuń użytkownika</a>
+        <br>
+
+        {% endfor %}
+    </div>
+
+    <div class=''>
+        <h3>Uczniowie</h3>     
+        {% for customer in customers %}
+
+        {{customer}} <a href="{% url 'admin-customer-detail' customer.id %}">Więcej</a> <a href="{% url 'admin-delete-user' customer.id %}">Usuń użytkownika</a>
+
+        {% endfor %}
+    </div>
+
+    <div class=''>
+        <h3>Administratorzy</h3>
+        {% for admin in admins %}
+
+        {{admin}}
+
+        {% endfor %}
+    </div>
+</div>
+</section>
+
+{% endblock %}

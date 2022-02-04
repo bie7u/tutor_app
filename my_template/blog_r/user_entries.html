@@ -1,0 +1,36 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load phone_access }
+
+{% block content %}
+
+{% if not phone_access %}
+<section class='container'>
+<div class='text-center py-3'>
+<h3>Dodaj artykuł na bloga</h3>
+<a href="{% url 'add_entry' %}"><button type="button" class="btn btn-outline-success py-1 font-weight-bold">Dodaj wpis</button></a>
+
+</div>
+<hr>
+{% for entry in form %}
+<a href="{% url 'entry_detail' entry.id %}" class="text-decoration-none text-dark">
+<p class='h5'>Tytuł: {{entry}}</p>
+<p class=''>Data dodania: {{entry.created_on|date:"d.m.Y H:m" }}</p>
+</a>
+<a href="{% url 'update_entry' entry.id %}"><button type="button" class="btn btn-outline-success py-1 font-weight-bold">Zaktualizuj</button></a>
+<a href="{% url 'delete_entry' entry.id %}"><button type="button" class="btn btn-outline-success py-1 font-weight-bold">Usuń</button></a>
+</p>
+<hr>
+{% endfor %}
+</section>
+{% endif %}
+
+{% if phone_access %}
+<section class='container'>
+    <h3 class='text-center m'>Aby dodać ogłoszenie musisz uzupełnić dane.</h3>
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'change_user_data' %}">Przejdź do ustawień</a>
+</section>
+{% endif %}
+
+{% endblock content %}

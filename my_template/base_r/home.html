@@ -1,0 +1,109 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load addcss %}
+
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+<header>
+  <div class='rectangle'>
+    <div class='header-sh'>
+      <p class='d-flex justify-content-center display-4 text-center'>Jesteś tu po raz kolejny?</p>
+
+      <div class="container text-center">
+        <button type="button" class="btn btn-success btn-round" data-toggle="modal" data-target="#loginModal">
+          <h2>Zaloguj się</h2>
+    
+        </button>  
+      </div>
+      
+      <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-title text-center">
+                <h2>Logowanie</h2>
+              </div>
+              <div class="d-flex flex-column text-center">
+                <form method='POST' action="">
+                  {% csrf_token %}
+                  <p id='logininput'><input type='text' class='form-control' name='username' placeholder="Login..."></p>
+                  <p id='logininput'><input type='password' class='form-control' name='password' placeholder="Hasło..."></p>
+                  <input class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" type='submit' name='Create User' value="Zaloguj sie">
+                </form>
+                
+                <div class="d-flex justify-content-center social-buttons">
+                </di>
+              </div>
+            </div>
+          </div>
+            <div class="modal-footer d-flex justify-content-center">
+              <div class="signup-section h6">Zapomniałeś hasła? <a href="{% url 'password_reset' %}" class="text-info"> Kliknij tutaj</a>.</div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class='container'>
+  <div class='row md-column justify-content-center'>
+    <div class='col-12 col-md-5 a text-center'>
+        <p class='h3'>Jesteś korepetytorem?</p>
+        <p class='h5'>Zacznij zarabiać z nami!</p>
+        <a href="{% url 'register_tutor' %}" class='text-decoration-none'><button href="" type="button" class="btn btn-dark btn-lg btn-block">Zarejestruj sie jako korepetytor</button></a>
+        
+    </div>
+    <div class='col-12 col-md-5 a text-center'>
+        <p class='h3'>Potrzebujesz korepetycji?</p>
+        <p class='h5'>Znajdź swojego nauczyciela!</p>
+        <a href="{% url 'register_customer' %}" class='text-decoration-none'><button href="" type="button" class="btn btn-dark btn-lg btn-block">Zarejestruj sie jako uczeń</button></a>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+<section class='container'>
+  {% if user.is_authenticated %}
+  <p class='display-4 text-center'>Strona główna</p>
+  {% endif %}
+<div class="row row-cols-1 row-cols-md-3 m">
+{% for entry in admin_entry %}
+<div class="col mb-4">
+    <div class="card">
+      <img src="{{entry.blog_pic.url}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{entry.title}}</h5>
+        <p class="card-text">{{entry.created_on|date:"d.m.Y H:m"}}</p>
+        <a class="btn btn-primary btn-lg btn-block" href="{% url 'entry_detail' entry.id %}">Czytaj...</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+<p class='display-4 text-center'>Najlepsze artykuły korepetytorów</p>
+<div class="row row-cols-1 row-cols-md-3 m">
+{% for entry in high_entry %}
+<div class="col mb-4">
+  <div class="card">
+    <img src="{{entry.blog_pic.url}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{entry.title}}</h5>
+      <p class="card-text">{{entry.created_on|date:"d.m.Y H:m"}}</p>
+      <a class="btn btn-primary btn-lg btn-block" href="{% url 'entry_detail' entry.id %}">Czytaj...</a>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+</section>
+{% endblock content %}
+

@@ -1,0 +1,60 @@
+{% load rank %}
+{% load group_auth %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{%  url 'home' %}">Korki.pl</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto h5">
+        <li class="nav-item active">
+          <a class="nav-link" href="{%  url 'home' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'tutors' %}">Korepetytorzy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'all_blog_entries' %}">Blog</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact-form' %}">Kontakt</a>
+        </li>
+      </ul>
+      {% if user.is_authenticated %}
+      <span class="navbar-text">
+        {% if request|rank == "tutor" %}
+        <span>Cześć, {{request.user}} - jestes zalogowany jako korepetytor</span>
+        {% elif request|rank == "customer" %}
+        <span>Cześć, {{request.user}} - jestes zalogowany jako uczeń</span>
+        {% elif request|rank == "admin" %}
+        <span>Cześć, {{request.user}} - jestes zalogowany jako admin</span>
+        {% endif %}
+          <a class='font-weight-bold text-decoration-none' href="{% url 'logout' %}">Wyloguj sie</a>
+      </span>
+      {% endif %}
+    </div>
+    
+  </nav>
+{% if user.is_authenticated %}
+<nav>
+    <div class="topnav-two ">
+      {% if request|group_auth == 1 %}
+        <a class="active text-decoration-none" href="{% url 'account' %}">Aktualności</a>
+        
+        <a href="{% url 'add_notice' %}" class='text-decoration-none'>Dodaj Ogłoszenie</a>
+        <a href="{% url 'my_entries' %}" class="text-decoration-none">Dodaj wpis na bloga</a>
+        <a href="{% url 'tutoring_order' %}" class="text-decoration-none">Korepetycje</a>
+        <a href="{% url 'settings' %}" class="text-decoration-none">Ustawienia</a>
+      {% endif %}
+      {% if request|group_auth == 2 %}
+      <a class="active text-decoration-none" href="{% url 'account' %}">Aktualności</a>
+      <a href="{% url 'tutoring_order' %}" class="text-decoration-none">Korepetycje</a>
+      <a href="{% url 'settings' %}" class="text-decoration-none">Ustawienia</a>
+      {% endif %}
+      {% if request|group_auth == 3 %}
+      <a href="{% url 'admin-panel' %}" class="text-decoration-none">Panel Administratora</a>
+      {% endif %}
+    </div>
+</nav>
+
+{% endif %}

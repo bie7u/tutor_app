@@ -1,0 +1,21 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class='container m'>
+
+
+    <form method="POST">
+        {% csrf_token %}
+        <h2 class='text-center m'>Jesteś pewny, że chcesz zdjąć wpis ze strony głównej?</h2>
+        <div class='text-center'>
+        <input class="btn btn-outline-success py-1 font-weight-bold" type="submit" value="Tak" />
+        <a href="{% url 'my_entries' %}">Anuluj </a>
+        </div>
+    </form>
+    
+</section>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+  .topnav-two {
+    background-color: rgb(85, 61, 61);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Style the links inside the navigation bar */
+  .topnav-two a {
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 12px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav-two a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav-two a.active {
+    background-color: #04AA6D;
+    color: white;
+    font-weight: bold;
+  }
+
+
+  /* HEADER */
+
+
+.rectangle {
+  display: flex;
+  justify-content: center;
+  background-color: blanchedalmond;
+  min-height: 200px;
+  padding: 20px;
+}
+.header-sh {
+  text-transform: uppercase;
+
+}
+
+
+.a {
+  padding: 10px 0;
+  margin: 10px 0;
+  background-color: rgba(0, 255, 0, 0.466);
+  border-radius: 15px;
+  border: 3px solid rgba(0, 0, 0, 0.705);
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.l {
+  margin-top: 150px;
+}
+
+.m{
+  margin-top: 30px;
+}
+
+.img-cl {
+  width: 400px;
+  height: 400px;
+}

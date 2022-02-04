@@ -1,0 +1,86 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load addcss %}
+{% load phone_access }
+
+{% block content %}
+
+{% if not phone_access %}
+{% if not note %}
+<section class='container m'>
+
+<form action="" method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="exampleFormControlInput1" class='h5'>Tytuł artykułu</label>
+        {{form.title|addcss:"form-control"}}
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1" class='h5'>Treść wpisu</label>
+        {{form.text|addcss:"form-control"}}
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <label for="exampleFormControlTextarea1" class='h5'>Cena za godzinę</label>
+            {{form.price|addcss:"form-control"}}
+        </div>
+    <div class="col">
+            <label for="exampleFormControlTextarea1" class='h5'>Twój wiek</label>
+            {{form.age|addcss:"form-control"}}
+        </div>
+    </div>
+
+    <div class="form-group">
+            <label for="exampleFormControlTextarea1" class='h5'>Twoje Miasto</label>
+            {{form.city|addcss:"form-control"}}
+    </div>
+    <div class="form-group col-md-4">
+        <span for="inputState" class='h5'>Przedmiot</span>
+            {{form.subject|addcss:"form-control"}}
+        </select>
+      </div>    
+      <div class='m'>
+      {{form.profile_pic}}
+      </div>
+    <p><input class="btn btn-primary btn-lg btn-block m" type="submit" value="Dodaj ogłoszenie">
+
+</form>
+</section>
+{% elif note %}
+
+<section class='container'>
+<h3 class='text-center'>Ogłoszenie jest aktywne.</h3>
+{% for i in note %}
+<p><span class='font-weight-bold'>Tytuł: </span>{{i.title}}</p>
+<p><span class='font-weight-bold'>Treść: </span>{{i.text}}</p>
+<p><span class='font-weight-bold'>Cena za godzinę: </span>{{i.price}}</p>
+<p><span class='font-weight-bold'>Twój wiek: </span>{{i.age}}</p>
+<p><span class='font-weight-bold'>Twoje miasto: </span>{{i.city}}</p>
+
+<a class="btn btn-outline-success py-1 font-weight-bold" href="{% url 'update_notice' request.user.notice.id %}">Zaktualizuj ogłoszenie</a>
+<a class="btn btn-outline-danger py-1 font-weight-bold" href="{% url 'delete_notice' request.user.notice.id %}">Usuń ogłoszenie</a>
+<hr>
+<h5>Pozostałe dane</h5>
+<p><span class='font-weight-bold'>Imię: </span>{{i.data.first_name}}</p>
+<p><span class='font-weight-bold'>Nazwisko: </span>{{i.data.last_name}}</p>
+<p><span class='font-weight-bold'>Numer telefonu: </span>{{i.data.phone}}</p>
+<h6>Jeżeli chcesz zmienić powyższe dane przejdż do <a href="{% url 'change_user_data' %}" class='text-decoration-none font-weight-bold'>USTAWIEŃ</a></h6>
+</div>
+{% endfor %}
+{% endif %}
+
+{{a}}
+</section>
+{% endif %}
+
+{% if phone_access %}
+<section class='container'>
+    <h3 class='text-center m'>Aby dodać ogłoszenie musisz uzupełnić dane.</h3>
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'change_user_data' %}">Przejdź do ustawień</a>
+</section>
+{% endif %}
+
+{% endblock content %}

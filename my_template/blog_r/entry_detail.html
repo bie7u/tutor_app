@@ -1,0 +1,71 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load addcss %}
+{% load group_auth %}
+
+
+{% block content %}
+
+<section class='container'>
+    <div class='text-center'>
+        <h1>{{form.title}}</h1>
+        {% if avarage %}
+        <h6>Artykuł został oceniony na: {{avarage}} przez {{users}} użytkowników</h6>
+        {% endif %}
+
+        {% if not avarage %}
+        <h6>Artykuł nie został jeszcze przez nikogo oceniony</h6>
+        {% endif %}
+    </div>
+    <img src="{{form.blog_pic.url}}" class="img-fluid img-rounded" alt="Responsive image">
+    <div>
+        <p class='h6'>{{form.text}}</p>
+    </div>
+    <br>
+{% if not user.is_authenticated %}
+<p><span class='font-weight-bold'>Autor: </span>{{form.user}}</p>
+{% endif %}
+
+{% if user.is_authenticated %}
+    <a href="{% url 'detail_tutor_view' form.user.id %}" class='text-decoration-none text-dark'><p><span class='font-weight-bold'>Autor: </span>{{form.user}}</p></a>
+    <hr>
+
+{% if score == None %}
+<div class='text-center'>
+    <h6>Oceń artykuł w skali od 0-5</h6>
+<form action="" method="POST" >
+    {% csrf_token %}
+    {{rate}}
+    <input type="submit" value="Oceń">
+</form>
+
+{% elif not score == None %}
+<p class='text-center'>{{score}}</p>
+{% endif %}
+<hr>
+</div>
+</section>
+
+<section class='container col-12 col-lg-6 py-4'>
+    <form action="" method="POST" >
+        {% csrf_token %}
+    
+        <div class="form-group">
+            {{add_com.text|addcss:"form-control"}}
+          <label for="exampleFormControlTextarea1" class='h5'>Treść komentarza</label>
+        </div>
+        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Dodaj komentarz">
+      </form>
+    </section>
+
+
+<hr>
+{% for c in com %}
+<div class="alert alert-info container" role="alert">
+    <p><span class='font-weight-bold'>{{c.user}}: </span>{{c.text}} {% if request|group_auth == 3 %} <a href="{% url 'admin-delete-com' c.id %}">Usuń komentarz</a> {% endif %}</p>
+  </div>
+<hr>
+{% endfor %}
+{% endif %}
+{% endblock content %}

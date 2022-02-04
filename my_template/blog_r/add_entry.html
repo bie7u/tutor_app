@@ -1,0 +1,26 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load addcss %}
+
+{% block content %}
+
+<section class='container py-4'>
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="exampleFormControlInput1" class='h5'>Tytuł artykułu</label>
+      {{form.title|addcss:"form-control"}}
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1" class='h5'>Treść wpisu</label>
+      {{form.text|addcss:"form-control"}}
+    </div>
+
+    <div class="custom-file">
+        {{form.blog_pic}}(rekomendowane wymiary to 1920x1080)
+      <input class="btn btn-success btn-lg btn-block" type="submit" value="Dodaj">
+  </form>
+</section>
+{% endblock content %}

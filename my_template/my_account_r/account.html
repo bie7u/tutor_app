@@ -1,0 +1,24 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load group_auth %}
+{% load all_data %}
+{% load group_auth }
+
+{% block content %}
+
+<section class='container'>
+<p class='display-4 text-center'>Aktualności</p>
+<hr>
+{% if request|group_auth == 1 %}
+{% if form %}
+<h3>Masz nowe propozycje korepetycji <a href="{% url 'tutoring_order' %}" class='text-secondary text-decoration-none'>Zobacz</a></h3>
+<hr>
+{% elif not form %}
+<h3>Nie masz żadnych nowych propozycji korepetycji</h3>
+<hr>
+{% endif %} 
+{% endif %}
+<p><a href="{% url 'all_orders' %}" class="btn btn-success">Zobacz swoje korepetycje</a></p>
+</section>
+{% endblock content %}

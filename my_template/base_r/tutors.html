@@ -1,0 +1,39 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+<section class='container m'>
+    {% if not user.is_authenticated %}
+    <a href="{% url 'home' %}" class='text-decoration-none text-dark'><h3 class='text-center'>Zaloguj się lub Zarejestruj aby zobaczyć tą część strony</h3></a>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <p class='display-4 text-center'>Oferty Korepetytorów</p>
+    <div class="row row-cols-1 row-cols-md-3 ">
+        {% for tutor in form %}
+        <a href="{% url 'detail_tutor_view' tutor.id %}" class='text-decoration-none text-dark'>
+        <div class="col mb-4">
+          <div class="card h-100">
+              <div class='p-3 d-flex justify-content-center'>
+                    <img src="{{tutor.profile_pic.url}}" class="card-img-top rounded-circle w-50" alt="...">
+                    <div class=''>
+                    <p class='k h5 text-center'><span class='font-weight-bold h5'>{{tutor.data.first_name}} {{tutor.data.last_name}}</span></p>
+                    <p class='k h5 text-center'><span class='font-weight-bold h5'>Wiek: </span>{{tutor.age}}</p>
+                    <p class='k h5 text-center'><span class='font-weight-bold h5'>Przedmiot: </span>{{tutor.subject}}</p>
+                    </div>
+                </div>
+            <div class="card-body">
+                <p class='k h5 text-center'><span class='font-weight-bold h5'>Miasto: </span>{{tutor.city}}</p>
+                <p class='k h5 text-center'><span class='font-weight-bold h5'>Cena za godzinę: </span>{{tutor.price}} zł</p>
+            </div>
+          </div>
+        </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+{% endblock content %}

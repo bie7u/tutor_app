@@ -1,0 +1,68 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load group_auth %}
+
+
+{% block content %}
+
+{% if not form %}
+{% endif %}
+
+<section class='container m'>
+{% if request|group_auth == 1 %}
+
+{% if not form %}
+<h1 class='text-center m'>Nie posiadasz aktualnie umówionych zajęć</h1>
+{% endif %}
+<div class="row row-cols-1 row-cols-md-3">
+{% for i in form %}
+<div class="col mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{i.user.client.first_name}} {{i.user.client.last_name}}</h5>
+        <h5 class="card-title">Numer telefonu: {{i.user.client.phone}}</h5>
+        <p class="card-text"><span class='font-weight-bold'>Miasto: </span>{{i.city}}</p>
+        <p class="card-text"><span class='font-weight-bold'>Ulica: </span>{{i.street}}</p>
+        <p class="card-text"><span class='font-weight-bold'>Numer domu: </span>{{i.number}}</p>
+        <p class="card-text"><span class='font-weight-bold'>Data: </span>{{i.expiration_date}}</p>
+        <p class="card-text"><span class='font-weight-bold'>Godzina: </span>{{i.hours}}</p>
+        <a href="{% url 'delete_order' i.id %}" class="btn btn-outline-success py-1 font-weight-bold">Skończone</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
+
+{% if request|group_auth == 2 %}
+
+{% if not form_two %}
+<h1 class='text-center m'>Nie posiadasz aktualnie umówionych zajęć</h1>
+{% endif %}
+<div class="row row-cols-1 row-cols-md-3">
+{% for i in form_two %}
+<div class="col mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Imię i nazwisko korepetytora</h6>
+        <h5 class="card-title">{{i.tutor.user.client.first_name}} {{i.tutor.user.client.last_name}}</h5>
+        <h6 class="card-title">Numer telefonu korepetytora</h6>
+        <h5 class="card-title">{{i.tutor.user.client.phone}}</h5>
+        <h6 class="card-title">Przedmiot</h6>
+        <h5 class="card-title">{{i.tutor.subject}}</h5>
+        <p class="card-text"><span class='font-weight-bold'>Miasto: </span>{{i.city}}</p>
+        <p class="card-text"><span class='font-weight-bold'>Ulica: </span>{{i.street}}</p>
+        <p class="card-text"><span class='font-weight-bold'>Numer domu: </span>{{i.number}}</p>
+        <p class="card-text"><span class='font-weight-bold'>Data: </span>{{i.expiration_date|date:"d.m.Y" }}</p>
+        <p class="card-text"><span class='font-weight-bold'>Godzina: </span>{{i.hours}}</p>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+
+{% endif %}
+</section>
+{% endblock content %}

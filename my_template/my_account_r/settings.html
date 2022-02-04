@@ -1,0 +1,11 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class='container m'>
+<p><a class="btn btn-primary btn-lg btn-block" href="{% url 'password_change_view' %}">Zmień hasło</a></p>
+<p><a class="btn btn-primary btn-lg btn-block" href="{% url 'change_user_data' %}">Zmień dane</a></p>
+</section>
+{% endblock content %}

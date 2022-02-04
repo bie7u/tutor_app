@@ -1,0 +1,38 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class='container'>
+    <div class='text-center py-3'>
+    <h3>Dodaj artykuł na bloga</h3>
+    <a href="{% url 'add-entry-admin' %}"><button type="button" class="btn btn-outline-success py-1 font-weight-bold">Dodaj wpis</button></a>
+
+    {% if form_two %}
+        <h3>Na stronie głównej znajduje się już maksymalna ilość artykułów.</h3>
+    {% endif %}
+
+    </div>
+    <hr>
+    {% for entry in form %}
+    <a href="{% url 'entry_detail' entry.id %}" class="text-decoration-none text-dark">
+    <p class='h5'>Tytuł: {{entry}}</p>
+    <p class=''>Data dodania: {{entry.created_on|date:"d.m.Y H:m" }}</p>
+    </a>
+    <a href="{% url 'admin-update-entry' entry.id %}"><button type="button" class="btn btn-outline-success py-1 font-weight-bold">Zaktualizuj</button></a>
+    <a href="{% url 'admin-delete-entry' entry.id %}"><button type="button" class="btn btn-outline-success py-1 font-weight-bold">Usuń</button></a>
+    {% if not form_two %}
+    {% if entry.admin_agree == False %}
+    <a href="{% url 'admin-publish-article' entry.id %}"><button type="button" class="btn btn-outline-danger py-1 font-weight-bold">Publikuj na stronie głównej</button></a>
+    {% endif %}
+    {% endif %}
+    {% if entry.admin_agree == True %}
+    <a href="{% url 'admin-withdraw-article' entry.id %}"><button type="button" class="btn btn-outline-danger py-1 font-weight-bold">Usuń ze strony głównej</button></a>
+    {% endif %}
+    </p>
+    <hr>
+    {% endfor %}
+    </section>
+
+{% endblock %}

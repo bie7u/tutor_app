@@ -1,0 +1,41 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+{% load addcss %}
+
+{% block content %}
+<section class='container'>
+<h1>Szczegóły zapytania</h1>
+<h5>Dane personalne</h5>
+<p><span class='font-weight-bold'>Imię: </span>{{obj.user.client.first_name}}</p>
+<p><span class='font-weight-bold'>Nazwisko: </span>{{obj.user.client.last_name}}</p>
+<p><span class='font-weight-bold'>Email: </span>{{obj.user.client.email}}</p>
+<p><span class='font-weight-bold'>Numer telefonu: </span>{{obj.phone_number}}</p>
+<hr>
+<h5>Adres</h5>
+<p><span class='font-weight-bold'>Miasto: </span>{{obj.city}}</p>
+<p><span class='font-weight-bold'>Ulica: </span>{{obj.street}}</p>
+<p><span class='font-weight-bold'>Numer domu: </span>{{obj.number}}</p>
+<hr>
+<h5>Data i godzina korepetycji</h5>
+<p><span class='font-weight-bold'>Dzień: </span>{{obj.expiration_date|date:"d.m.Y" }}</p>
+<p><span class='font-weight-bold'>Godzina: </span>{{obj.hours}}</p>
+<hr>
+<h5>Potwierdzenie</h5>
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>{{form.accept}}</p>
+    <p>Potwierdź (pole wymagane): {{form.agree}}</p>
+    <input type="submit" class='btn btn-outline-success' value="POTWIERDZ">
+</form>
+
+{% if messages %}
+  <p class="messages">
+    {% for message in messages %}
+      <p class="{{ message.tags }} font-weight-bold">UWAGA: {{message}}</p>
+    {% endfor %}
+  </p>
+{% endif %}
+</section>
+
+{% endblock content %}

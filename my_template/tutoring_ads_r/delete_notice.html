@@ -1,0 +1,16 @@
+{% extends 'base_r/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class='container text-center'>
+    <form method="POST">
+        {% csrf_token %}
+        <h2 class='text-center'>Jesteś pewny, że chcesz usunąć ogłoszenie?</h2>
+        <input class="btn btn-outline-success py-1 font-weight-bold" type="submit" value="Tak" />
+        <a href="{% url 'my_entries' %}">Anuluj </a>
+    </form>
+    </section>
+
+{% endblock content %}
