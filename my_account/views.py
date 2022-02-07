@@ -80,7 +80,7 @@ def delete_order(request, id):
         send_mail(
         'Wiadomość dotycząca twojej lekcji na korki.pl',
         'Korepetytor uznał, że zajęcia się już odbyły. Jeżeli jest to niezgodne z prawdą prosimy skontaktować się z obsługą korki.pl',
-        'companybiela@gmail.com',
+        '', # Miejsce na email
         [email],
         fail_silently=False,
         )
