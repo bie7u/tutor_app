@@ -40,7 +40,7 @@ def contact_form(request):
             email_subject, 
             email_message,
             email,
-            ['krystiantsp@gmail.com'],
+            [''], # Miejsce na email
             fail_silently=False
             )
     context = {'form': form}
