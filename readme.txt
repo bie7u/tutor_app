@@ -1,5 +1,3 @@
-## Suenma
-
 'base' - moduł odpowiedzialny za ogólne widoki
 'reg_log' - moduł odpowiedzialny za rejestracje i logowanie użytkowników (zmiana i reset haseł)
 'blog' - moduł odpowiedzialny za wszystkie opcje bloga
